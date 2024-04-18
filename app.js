@@ -251,6 +251,7 @@ let favPage = document.querySelector(".favouritePage")
 let totalCount=document.querySelector(".totalCount")
 let basketValue=document.querySelector(".basketValue")
 let totalPrice=document.querySelector(".totalPrice")
+let deleteButton=document.querySelector(".deleteButton")
 
 
 api.forEach(element => {
@@ -444,7 +445,9 @@ function createElement(apiDatas, page) {
             basketItem = []
         })
     })
-
+    deleteButton.addEventListener("click",()=>{
+        basketPage.innerHTML=" "
+    })
   
 
 
