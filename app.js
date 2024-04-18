@@ -242,9 +242,16 @@ let api = [
 ]
 
 let basketItem = [];
+let favItem=[]
+
 
 let homePage = document.querySelector(".homePage")
 let basketPage = document.querySelector(".basketPage")
+let favPage = document.querySelector(".favouritePage")
+let totalCount=document.querySelector(".totalCount")
+let basketValue=document.querySelector(".basketValue")
+let totalPrice=document.querySelector(".totalPrice")
+
 
 api.forEach(element => {
     createElement(element, homePage)
@@ -252,6 +259,9 @@ api.forEach(element => {
 // api.forEach(element => {
 //     basketPageProductCreate(element,homePage)
 // });
+let say=0;
+let sum=0;
+
 
 
 
@@ -278,11 +288,12 @@ function createElement(apiDatas, page) {
     newBtn.style.border = "none";
     newBtn.style.backgroundColor = "#43D167";
 
-
     let basketIcon = document.createElement("i")
     basketIcon.className = "fa-solid fa-cart-plus fa-xl";
     basketIcon.style.fontSize = "30px";
     basketIcon.addEventListener("click", () => {
+        say+=1;
+        basketValue.innerText=say
         basketItem.push(apiDatas)
         basketItem.forEach((elem) => {
             let box = document.createElement("div");
@@ -375,6 +386,7 @@ function createElement(apiDatas, page) {
             pilusBtn.addEventListener("click", () => {
                 count.innerText = (+count.innerText) + 1
                 price.innerText = elem.price * (+count.innerText) + "AZN"
+                totalPrice.innerText="Total:"+ price.innerText;
             })
 
 
@@ -396,7 +408,7 @@ function createElement(apiDatas, page) {
                 }
                 count.innerText = (+count.innerText) - 1
                 price.innerText = elem.price * (+count.innerText) + "AZN"
-
+                // totalPrice.innerText="Total:"+ price.innerText
             })
 
             let deleteBtnn = document.createElement("button")
@@ -424,14 +436,16 @@ function createElement(apiDatas, page) {
 
             box.append(newBtn, deleteBtnn, favIcon, image, title, star, discount, price, btns)
             basketPage.append(box)
+            basketItem.forEach((elem)=>{
+                totalPrice.innerText+=elem.price
+            })
+            totalCount.innerText=`Total Count: ${basketValue.innerText}`;
+            totalPrice.innerText=`Total Count: ${price.innerText}`;
             basketItem = []
         })
     })
 
-    let deleteButton = document.querySelector(".deleteButton")
-    deleteButton.addEventListener("click", (e) => {
-        basketPage.innerHTML = " "
-    })
+  
 
 
 
@@ -439,6 +453,163 @@ function createElement(apiDatas, page) {
     favIcon.className = "fa-solid fa-heart-pulse fa-xl"
     favIcon.style.color = "red";
     favIcon.style.fontSize = "30px";
+    favIcon.addEventListener("click", () => {
+        favItem.push(apiDatas)
+        favItem.forEach((elem) => {
+            let box = document.createElement("div");
+            box.className = "card";
+            box.style.border = "1px solid grey";
+            box.style.width = "380px"
+            box.style.border = "none";
+            box.style.height = "428px";
+            box.style.borderRadius = "20px";
+            box.style.backgroundColor = "#F9F9F9";
+
+            let newBtn = document.createElement("button")
+            newBtn.innerText = "New";
+            newBtn.style.color = "white";
+            newBtn.className = "newBtn"
+            newBtn.style.width = "79px";
+            newBtn.style.height = "32px";
+            newBtn.style.borderRadius = "8px";
+            newBtn.style.border = "none";
+            newBtn.style.marginTop = "5px";
+            newBtn.style.backgroundColor = "#43D167";
+
+            let favIcon = document.createElement("i");
+            favIcon.className = "fa-solid fa-heart-pulse fa-xl"
+            favIcon.style.color = "red";
+            favIcon.style.fontSize = "30px";
+            favIcon.style.marginLeft = "330px"
+
+            let image = document.createElement("img")
+            image.src = elem.image;
+            image.className = "image";
+            image.style.width = "150px";
+            image.style.height = "150px";
+
+            let title = document.createElement("p")
+            title.innerText = elem.title;
+            title.className = "title";
+            title.style.fontSize = "16px";
+            title.style.fontWeight = "900";
+
+
+            let star = document.createElement("img")
+            star.className = "star";
+            star.src = "./images/Group 25546.png";
+            star.style.width = "100px";
+
+            let price = document.createElement("span")
+            price.innerText = elem.price + " AZN";
+            price.className = "price";
+            price.style.fontSize = "20px";
+            price.style.fontWeight = "900";
+            price.style.color = "red";
+
+
+            let discount = document.createElement("span")
+            discount.innerText = parseInt((+elem.price) + 50) + " AZN";
+            discount.className = "price";
+            discount.style.fontSize = "20px";
+            discount.style.fontWeight = "900";
+            discount.style.color = "#4CC3FF";
+            discount.style.textDecoration = "line-through"
+
+
+            let count = document.createElement("span")
+            count.innerText = "1";;
+            count.className = "countt";
+            count.style.fontSize = "30px";
+            count.style.textAlign = "center";
+            count.style.borderRadius = "50%";
+            count.style.width = "50px";
+            count.style.border = "1px solid black";
+            count.style.backgroundColor = "pink"
+            count.style.borderColor = "transparent"
+            count.style.marginBottom = "40px";
+            count.style.color = "red"
+
+
+            let pilusBtn = document.createElement("span")
+            pilusBtn.innerText = "+";
+            pilusBtn.className = "pilus";
+            pilusBtn.style.textAlign = "center";
+            pilusBtn.style.fontSize = "30px";
+            pilusBtn.style.borderRadius = "50%";
+            pilusBtn.style.width = "50px";
+            pilusBtn.style.border = "1px solid black";
+            pilusBtn.style.backgroundColor = "pink"
+            pilusBtn.style.borderColor = "transparent"
+            pilusBtn.style.marginBottom = "40px";
+            pilusBtn.style.color = "red"
+            pilusBtn.addEventListener("click", () => {
+                count.innerText = (+count.innerText) + 1
+                price.innerText = elem.price * (+count.innerText) + "AZN"
+                totalPrice.innerText="Total:"+ price.innerText;
+            })
+
+
+            let minusBtn = document.createElement("span")
+            minusBtn.innerText = "-";
+            minusBtn.className = "pilus";
+            minusBtn.style.fontSize = "30px";
+            minusBtn.style.textAlign = "center";
+            minusBtn.style.borderRadius = "50%";
+            minusBtn.style.width = "50px";
+            minusBtn.style.border = "1px solid black";
+            minusBtn.style.backgroundColor = "pink"
+            minusBtn.style.borderColor = "transparent"
+            minusBtn.style.color = "red"
+            minusBtn.style.marginBottom = "40px";
+            minusBtn.addEventListener("click", () => {
+                if ((+count.innerText) == 1) {
+                    return (+count.innerText)
+                }
+                count.innerText = (+count.innerText) - 1
+                price.innerText = elem.price * (+count.innerText) + "AZN"
+                // totalPrice.innerText="Total:"+ price.innerText
+            })
+
+            let deleteBtnn = document.createElement("button")
+            deleteBtnn.innerText = "X";
+            deleteBtnn.style.color = "white";
+            deleteBtnn.className = "deletbtn"
+            deleteBtnn.style.width = "40px";
+            deleteBtnn.style.height = "20px";
+            deleteBtnn.style.borderRadius = "0px";
+            deleteBtnn.style.border = "none";
+            deleteBtnn.style.backgroundColor = "red";
+            deleteBtnn.style.marginLeft = "260px";
+
+
+            deleteBtnn.addEventListener("click",()=>{
+                box.style.display="none";
+            })
+
+            let btns = document.createElement("div")
+            btns.className = "btns";
+            btns.style.width = "300px";
+
+            btns.append(count, pilusBtn, minusBtn)
+
+            box.append(newBtn, deleteBtnn, favIcon, image, title, star, discount, price, btns)
+            favPage.append(box)
+            favItem.forEach((elem)=>{
+                totalPrice.innerText+=elem.price
+            })
+            totalCount.innerText=`Total Count: ${basketValue.innerText}`;
+            totalPrice.innerText=`Total Count: ${price.innerText}`;
+            favItem = []
+        })
+      
+    })
+    let deleteButtonFav=document.querySelector(".deleteButtonFav")
+    deleteButtonFav.addEventListener("click",()=>{
+        favPage.innerHTML=" "
+    })
+ 
+    
 
     let image = document.createElement("img")
     image.src = apiDatas.image;
@@ -473,6 +644,8 @@ function createElement(apiDatas, page) {
     discount.style.fontWeight = "900";
     discount.style.color = "#4CC3FF";
     discount.style.textDecoration = "line-through"
+
+
 
 
 
